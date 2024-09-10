@@ -1,5 +1,7 @@
+const API_END_POINT = "http://localhost:3000/"
+
 export const request = (url) => {
-    return fetch(`${API_END_POINT}/${url}`)
+    return fetch(`${API_END_POINT}${url.indexOf('/') === 0 ? url : `/${url}`}`)
         .then(res => {
             if (res.ok) {
                 return res.json()
