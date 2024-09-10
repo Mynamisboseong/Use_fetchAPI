@@ -15,14 +15,20 @@ export default function ProductOptions({ $target, initialState, onSelect }) {
     }
 
     $select.addEventListener('change', (e) => {
-        console.log(e.target.value)
+        const optionId = parseInt(e.target.value)
+
+        const option = this.state.find(option => option.optionId === optionId)
+
+        if (option) {
+            onSelect(option)
+        }
     })
 
     this.render = () => {
         if (this.state && Array.isArray(this.state)) {
             $select.innerHTML = `
             <option>선택하세요!</option>
-            ${this.state.map(option => `<option ${option.stock === 0 ? 'disabled' : ''} value = "${option.id}"> ${createOptionFullName(option)}</option>`).join('')}
+            ${this.state.map(option => `<option ${option.stock === 0 ? 'disabled' : ''} value = "${option.optionId}"> ${createOptionFullName(option)}</option>`).join('')}
             `
         }
     }

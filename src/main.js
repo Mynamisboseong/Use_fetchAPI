@@ -1,5 +1,6 @@
 import ProductOptions from "./ProductOptions.js"
 
+
 const dummyData = [
     {
         optionId: 1,
@@ -9,13 +10,13 @@ const dummyData = [
     },
     {
         optionId: 2,
-        optionName: "더미 데이터다2!",
+        optionName: "2번째 더미 데이터다!",
         optionPrice: 15000,
         stock: 10
     },
     {   
         optionId: 3,
-        optionName: "더미 데이터다3!",
+        optionName: "3번째 더미 데이터다!",
         optionPrice: 10000,
         stock: 0
     }
@@ -24,5 +25,8 @@ const dummyData = [
 const $target = document.querySelector("#app")
 new ProductOptions({
     $target,
-    initialState: dummyData
+    initialState: dummyData,
+    onSelect: (option) => {
+        alert(option.optionName)
+    }
 })
