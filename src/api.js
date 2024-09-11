@@ -1,4 +1,4 @@
-const API_END_POINT = "http://localhost:3000/"
+const API_END_POINT = "https://misc.edu-api.programmers.co.kr"
 
 export const request = (url) => {
     return fetch(`${API_END_POINT}${url.indexOf('/') === 0 ? url : `/${url}`}`)
@@ -8,5 +8,8 @@ export const request = (url) => {
             }
             throw new Error(`${res.status} Error`)
         })
-        .catch(e => alert(e.message))
+        .catch(e => {
+            console.error(e)
+            alert(e.message)
+        })
 }
