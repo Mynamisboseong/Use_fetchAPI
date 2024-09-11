@@ -29,8 +29,11 @@ const DEFAULT_PRODUCT_ID = 1
 const fetchOptionData = (productId) => {
     return request(`/products/${productId}`)
         .then(product => {
-        console.log(product)
-    })
+        return request (`/product-options?product.id=${product.id}`)
+        })
+        .then(productOptions => {
+            console.log(productOptions)
+        })
 }
 
 fetchOptionData(DEFAULT_PRODUCT_ID)
