@@ -32,7 +32,17 @@ const fetchOptionData = (productId) => {
         return request (`/product-options?product.id=${product.id}`)
         })
         .then(productOptions => {
-            console.log(productOptions)
+            return Promise.all([
+                Promise.resolve(productOptions),
+                Promise.all(
+                    productOptions.map(productOption => productOption.id).map(id => {
+                        return request(`/product-option-stocks?productOption.id=${id}`)
+                    })
+                )
+            ])
+        })
+        .then(data => {
+            console.log(data)
         })
 }
 
