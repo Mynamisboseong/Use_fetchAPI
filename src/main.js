@@ -1,27 +1,6 @@
 import ProductOptions from "./ProductOptions.js"
 import { request } from "./api.js"
 
-const dummyData = [
-    {
-        optionId: 1,
-        optionName: "더미 데이터다!",
-        optionPrice: 10000,
-        stock: 10
-    },
-    {
-        optionId: 2,
-        optionName: "2번째 더미 데이터다!",
-        optionPrice: 15000,
-        stock: 10
-    },
-    {   
-        optionId: 3,
-        optionName: "3번째 더미 데이터다!",
-        optionPrice: 10000,
-        stock: 0
-    }
-]
-
 const $target = document.querySelector("#app")
 
 const DEFAULT_PRODUCT_ID = 1
@@ -42,14 +21,25 @@ const fetchOptionData = (productId) => {
             ])
         })
         .then(data => {
-            console.log(data)
+            const [productOptions, stocks] = data
+            const optionData = productOptions.map((productOption,i) => {
+                const stock = stocks[i][0].stock
+
+                return {
+                    optionId: productOption.id,
+                    optionName: productOption.optionName,
+                    optionPrice: productOption.optionPrice,
+                    stock: stock.stock
+                }
+            })
+            productOptionsComponent.setState(optionData)
         })
 }
 
 fetchOptionData(DEFAULT_PRODUCT_ID)
-new ProductOptions({
+const productOptionsComponent = new ProductOptions({
     $target,
-    initialState: dummyData,
+    initialState: [],
     onSelect: (option) => {
         alert(option.optionName)
     }
